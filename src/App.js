@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Movie from "../routes/Movie";
+import Movie from "./Movie";
+
 const useFetch = (callback, url) => {
   const [Loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
