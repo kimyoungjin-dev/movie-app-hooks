@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Movie from "./Movie";
-
+import Movie from "../routes/Movie";
 const useFetch = (callback, url) => {
   const [Loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,18 +35,26 @@ const App = () => {
 
   return (
     <>
-      {Loading
-        ? "Loading..."
-        : movies.map((e) => (
-            <Movie
-              key={e.id}
-              title={e.title}
-              poster={e.medium_cover_image}
-              summary={e.summary}
-              year={e.year}
-              genres={e.genres}
-            />
-          ))}
+      <div className="container">
+        {Loading ? (
+          <div className="LoadingScreen">
+            <span>Loading...</span>
+          </div>
+        ) : (
+          <div className="movies">
+            {movies.map((e) => (
+              <Movie
+                key={e.id}
+                title={e.title}
+                poster={e.medium_cover_image}
+                summary={e.summary}
+                year={e.year}
+                genres={e.genres}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 };
