@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./Movie";
 
@@ -8,8 +8,12 @@ const useFetch = (callback, url) => {
 
   const getMovies = async () => {
     try {
-      const response = await axios.get(url);
-      callback(response);
+      const {
+        data: {
+          data: { movies },
+        },
+      } = await axios.get(url);
+      callback(movies);
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -23,13 +27,29 @@ const useFetch = (callback, url) => {
 };
 
 const App = () => {
-  const [data, setData] = useState(null);
+  const [movies, setMovies] = useState([]);
   const { Loading, error } = useFetch(
-    setData,
+    setMovies,
     `https://yts-proxy.now.sh/list_movies.json?sort_by=rating`
   );
+  console.log(movies);
 
-  return <>{Loading ? "Loading..." : <Movie data={data} error={error} />}</>;
+  return (
+    <>
+      {Loading
+        ? "Loading..."
+        : movies.map((e) => (
+            <Movie
+              key={e.id}
+              title={e.title}
+              poster={e.medium_cover_image}
+              summary={e.summary}
+              year={e.year}
+              genres={e.genres}
+            />
+          ))}
+    </>
+  );
 };
 
 export default App;
