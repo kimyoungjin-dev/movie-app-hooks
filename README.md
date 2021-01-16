@@ -1,2 +1,3 @@
-# movie-app-hooks
-Create a movie app site that was made in class type
+# Create a hooks version movie app
+
+Let’s leave the class type we made last time and make it hooks this time.
